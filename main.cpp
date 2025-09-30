@@ -85,57 +85,27 @@ vector<Movie> getMovies(string db_name)
   * @param title Movie title (partial or complete) to search for
   * @return nothing.
   */
-void findMovies(vector<Movie> movies, string title)
-{    
-      int truecount = 0;
-  for (Movie m : movies) {
-    //
-    // TODO
-    // 
-    // Right now we only show the movie if the title is
-    // an exact match. We want to do a substring search,
-    // i.e. output the movie if the given title appears
-    // anywhere in m.getTitle(). We also want to perform
-    // a case-insensitive search. Finally, if no movies
-    // are found, output "no movies found...".
-    // 
-    // HINT: strings have a find() method that searches
-    // for a substring. If found, returns the index in
-    // the string array where the substring starts. If
-    // not found, returns string::npos, which means "no
-    // position found".
-    // 
+void findMovies(const std::vector<Movie>& movies, std::string title)
+{
+    std::transform(title.begin(), title.end(), title.begin(),
+    [](unsigned char c){ return std::tolower(c); });
 
-    
-    if (m.getTitle() == title) {
-      m.print();
-      
+    bool found = false;
+
+    for (const Movie& m : movies) {
+     std::string t = m.getTitle();
+      std::transform(t.begin(), t.end(), t.begin(),
+      [](unsigned char c){ return std::tolower(c); });
+
+        if (t.find(title) != std::string::npos) {
+            m.print();          
+            found = true;
+        }
     }
 
-    size_t pos = m.getTitle().find(title);
-
-    if (pos != string::npos){
-      m.print();
-      truecount++;
+    if (!found) {
+        std::cout << "no movies found..." << std::endl;
     }
-
-    string title2 = m.getTitle(); // make a modifiable copy
-    transform(title2.begin(), title2.end(), title2.begin(), ::tolower);
-
-   size_t pos2 = title2.find(title);
-    if (pos2 != string::npos){
-        m.print();
-        truecount++;
-    }
-
-
-  }
-
-  if (truecount == 0) {
-    cout << "no movies found..." << endl;
-  }
-
-  return;
 }
 
 
