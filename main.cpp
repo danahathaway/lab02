@@ -87,6 +87,7 @@ vector<Movie> getMovies(string db_name)
   */
 void findMovies(vector<Movie> movies, string title)
 {    
+      int truecount = 0;
   for (Movie m : movies) {
     //
     // TODO
@@ -106,17 +107,16 @@ void findMovies(vector<Movie> movies, string title)
     // 
 
     
-    
     if (m.getTitle() == title) {
       m.print();
-      return;
+      
     }
 
     size_t pos = m.getTitle().find(title);
 
     if (pos != string::npos){
       m.print();
-      return;
+      truecount++;
     }
 
     string title2 = m.getTitle(); // make a modifiable copy
@@ -125,13 +125,16 @@ void findMovies(vector<Movie> movies, string title)
    size_t pos2 = title2.find(title);
     if (pos2 != string::npos){
         m.print();
-        return;
+        truecount++;
     }
 
 
   }
-  
-  cout << "no movies found..." << endl;
+
+  if (truecount == 0) {
+    cout << "no movies found..." << endl;
+  }
+
   return;
 }
 
