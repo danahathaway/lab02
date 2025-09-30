@@ -117,12 +117,7 @@ double Movie::getRevenue()
 //
 int Movie::getNumRatings()
 {
-  //
-  // TODO
-  //
-  // return the # of ratings in the vector:
-  //
-  return -1;
+  return (this->Ratings.size());
 }
 
 
