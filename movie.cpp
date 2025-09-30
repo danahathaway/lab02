@@ -97,24 +97,19 @@ Movie::Movie(database& db, int movie_id)
 //
 int Movie::getMovieID()
 {
-  //
-  // TODO
-  //
-  return -1;
+  return (this->Movie_ID);
 }
 string Movie::getTitle()
 {
-  //
-  // TODO
-  //
-  return "title?";
+
+  return (this->Title);
+
 }
 double Movie::getRevenue()
 {
-  //
-  // TODO
-  //
-  return -1.0;
+
+  return (this->Revenue);
+
 }
 
 //
@@ -138,12 +133,15 @@ double Movie::getAverageRating()
 {
   //
   // TODO
-  //
-  // return the average rating. Some movies do not have
-  // ratings, so check for divide by 0 and return 0.0 
-  // in that case.
-  //
-  return -1.0;
+  if (this->Ratings.size() == 0) {
+    return 0.0;
+  }
+
+  double sum = 0.0;
+  for (const auto& rating : this->Ratings) {
+    sum += rating;
+  }
+  return sum / this->Ratings.size();
 }
 
 
@@ -164,6 +162,15 @@ void Movie::print()
   // print out the genres vector with ", " between each genre.
   // Example: Genres: Action, Science Fiction, Thriller
   //
+
+  for (size_t i = 0; i < this->Genres.size(); i++) {
+    cout << this->Genres[i];
+    if (i < this->Genres.size() - 1) {
+      cout << ", ";
+    }
+  }
+  cout << endl;
+
   // HINT: use an index-based for loop, not foreach, and use
   // index to decide if you should output ", " or not.
   //

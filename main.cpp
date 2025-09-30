@@ -104,12 +104,34 @@ void findMovies(vector<Movie> movies, string title)
     // not found, returns string::npos, which means "no
     // position found".
     // 
+
+    
     
     if (m.getTitle() == title) {
       m.print();
+      return;
     }
+
+    size_t pos = m.getTitle().find(title);
+
+    if (pos != string::npos){
+      m.print();
+      return;
+    }
+
+    string title2 = m.getTitle(); // make a modifiable copy
+    transform(title2.begin(), title2.end(), title2.begin(), ::tolower);
+
+   size_t pos2 = title2.find(title);
+    if (pos2 != string::npos){
+        m.print();
+        return;
+    }
+
+
   }
   
+  cout << "no movies found..." << endl;
   return;
 }
 
