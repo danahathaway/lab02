@@ -19,6 +19,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <cctype>
+
 
 #include "movie.h"
 #include "sqlite_modern_cpp.h"
@@ -85,28 +88,28 @@ vector<Movie> getMovies(string db_name)
   * @param title Movie title (partial or complete) to search for
   * @return nothing.
   */
-void findMovies(const std::vector<Movie>& movies, std::string title)
-{
-    std::transform(title.begin(), title.end(), title.begin(),
-    [](unsigned char c){ return std::tolower(c); });
+void findMovies(vector<Movie> movies, string title) {
+    int truecount = 0;
 
-    bool found = false;
+    transform(title.begin(), title.end(), title.begin(), ::tolower);
 
-    for (const Movie& m : movies) {
-     std::string t = m.getTitle();
-      std::transform(t.begin(), t.end(), t.begin(),
-      [](unsigned char c){ return std::tolower(c); });
+    for (Movie m : movies) {
+        string title2 = m.getTitle();
+        transform(title2.begin(), title2.end(), title2.begin(), ::tolower);
 
-        if (t.find(title) != std::string::npos) {
-            m.print();          
-            found = true;
+        if (title2.find(title) != string::npos) {
+            m.print();
+            truecount++;
         }
     }
 
-    if (!found) {
-        std::cout << "no movies found..." << std::endl;
+    if (truecount == 0) {
+        cout << "no movies found..." << endl;
     }
+
+    return;
 }
+
 
 
 /**
